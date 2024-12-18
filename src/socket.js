@@ -1,4 +1,4 @@
-import io from "socket.io-client"; // Add this
+import io from "socket.io-client";
 
 let socket;
 

@@ -1,4 +1,4 @@
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 // sections
 import { Stack, Typography, Link } from "@mui/material";
 import AuthSocial from "../../sections/auth/AuthSocial";
@@ -7,6 +7,9 @@ import Login from "../../sections/auth/LoginForm";
 // ----------------------------------------------------------------------
 
 export default function LoginPage() {
+
+  const navigate = useNavigate();
+
   return (
     <>
       <Stack spacing={2} sx={{ mb: 5, position: "relative" }}>
@@ -16,7 +19,7 @@ export default function LoginPage() {
           <Typography variant="body2">New user?</Typography>
 
           <Link
-            to={"http://localhost:3001/auth/register"}
+            to="/auth/register"
             component={RouterLink}
             variant="subtitle2"
           >

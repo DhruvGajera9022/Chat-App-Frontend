@@ -147,6 +147,7 @@ export function LoginUser(formValues) {
           })
         );
         window.localStorage.setItem("user_id", response.data.user_id);
+        window.localStorage.setItem("token", response.data.token);
         dispatch(
           showSnackbar({ severity: "success", message: response.data.message })
         );
@@ -167,6 +168,7 @@ export function LoginUser(formValues) {
 export function LogoutUser() {
   return async (dispatch, getState) => {
     window.localStorage.removeItem("user_id");
+    window.localStorage.removeItem("token");
     dispatch(slice.actions.signOut());
   };
 }

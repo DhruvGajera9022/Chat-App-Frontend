@@ -265,7 +265,7 @@ export const UpdateUserProfile = (formValues) => {
         { Bucket: S3_BUCKET_NAME, Key: key, ContentType: `image/${file.type}` },
         async (_err, presignedURL) => {
           await fetch(presignedURL, {
-            method: "PUT",
+            method: "PATCH",
 
             body: file,
 
@@ -294,7 +294,7 @@ export const UpdateUserProfile = (formValues) => {
         }
       )
       .then((response) => {
-        console.log(response);
+        console.log("UPDATE: ", response);
         dispatch(slice.actions.updateUser({ user: response.data.data }));
       })
       .catch((err) => {

@@ -16,7 +16,7 @@ import { RegisterUser } from "../../redux/slices/auth";
 
 export default function AuthRegisterForm() {
   const dispatch = useDispatch();
-  const {isLoading} = useSelector((state) => state.auth);
+  const { isLoading } = useSelector((state) => state.auth);
   const [showPassword, setShowPassword] = useState(false);
 
   const LoginSchema = Yup.object().shape({
@@ -28,16 +28,9 @@ export default function AuthRegisterForm() {
     password: Yup.string().required("Password is required"),
   });
 
-  const defaultValues = {
-    firstName: "",
-    lastName: "",
-    email: "demo@tawk.com",
-    password: "demo1234",
-  };
 
   const methods = useForm({
     resolver: yupResolver(LoginSchema),
-    defaultValues,
   });
 
   const {

@@ -14,13 +14,13 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { CaretDown, MagnifyingGlass, Phone, VideoCamera } from "phosphor-react";
-import { faker } from "@faker-js/faker";
 import useResponsive from "../../hooks/useResponsive";
 import { ToggleSidebar } from "../../redux/slices/app";
 import { useDispatch, useSelector } from "react-redux";
 import { StartAudioCall } from "../../redux/slices/audioCall";
 import { StartVideoCall } from "../../redux/slices/videoCall";
 
+// Styled Badge for online status
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
     backgroundColor: "#44b700",
@@ -50,19 +50,12 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
+// Menu options for the conversation menu
 const Conversation_Menu = [
-  {
-    title: "Contact info",
-  },
-  {
-    title: "Mute notifications",
-  },
-  {
-    title: "Clear messages",
-  },
-  {
-    title: "Delete chat",
-  },
+  { title: "Contact info" },
+  { title: "Mute notifications" },
+  { title: "Clear messages" },
+  { title: "Delete chat" },
 ];
 
 const ChatHeader = () => {
@@ -70,14 +63,20 @@ const ChatHeader = () => {
   const isMobile = useResponsive("between", "md", "xs", "sm");
   const theme = useTheme();
 
-  const {current_conversation} = useSelector((state) => state.conversation.direct_chat);
+  // Current conversation data from Redux state
+  const { current_conversation } = useSelector(
+    (state) => state.conversation.direct_chat
+  );
 
+  // State for conversation menu
   const [conversationMenuAnchorEl, setConversationMenuAnchorEl] =
     React.useState(null);
   const openConversationMenu = Boolean(conversationMenuAnchorEl);
+
   const handleClickConversationMenu = (event) => {
     setConversationMenuAnchorEl(event.currentTarget);
   };
+
   const handleCloseConversationMenu = () => {
     setConversationMenuAnchorEl(null);
   };
@@ -118,14 +117,14 @@ const ChatHeader = () => {
                 variant="dot"
               >
                 <Avatar
-                  alt={current_conversation?.name}
-                  src={current_conversation?.img}
+                  alt={current_conversation?.name || "User"}
+                  src={current_conversation?.img || ""}
                 />
               </StyledBadge>
             </Box>
             <Stack spacing={0.2}>
               <Typography variant="subtitle2">
-                {current_conversation?.name}
+                {current_conversation?.name || "Unknown User"}
               </Typography>
               <Typography variant="caption">Online</Typography>
             </Stack>
@@ -135,15 +134,20 @@ const ChatHeader = () => {
             alignItems="center"
             spacing={isMobile ? 1 : 3}
           >
-            <IconButton onClick={() => {
-              dispatch(StartVideoCall(current_conversation.user_id));
-            }}>
+            <IconButton
+              onClick={() => {
+                if (current_conversation?.user_id) {
+                  dispatch(StartVideoCall(current_conversation.user_id));
+                }
+              }}
+            >
               <VideoCamera />
             </IconButton>
             <IconButton
               onClick={() => {
-                
-                dispatch(StartAudioCall(current_conversation.user_id));
+                if (current_conversation?.user_id) {
+                  dispatch(StartAudioCall(current_conversation.user_id));
+                }
               }}
             >
               <Phone />
@@ -188,8 +192,11 @@ const ChatHeader = () => {
             >
               <Box p={1}>
                 <Stack spacing={1}>
-                  {Conversation_Menu.map((el) => (
-                    <MenuItem onClick={handleCloseConversationMenu}>
+                  {Conversation_Menu.map((el, index) => (
+                    <MenuItem
+                      key={index}
+                      onClick={handleCloseConversationMenu}
+                    >
                       <Stack
                         sx={{ minWidth: 100 }}
                         direction="row"
@@ -197,7 +204,7 @@ const ChatHeader = () => {
                         justifyContent="space-between"
                       >
                         <span>{el.title}</span>
-                      </Stack>{" "}
+                      </Stack>
                     </MenuItem>
                   ))}
                 </Stack>
@@ -206,8 +213,6 @@ const ChatHeader = () => {
           </Stack>
         </Stack>
       </Box>
-
-      
     </>
   );
 };
