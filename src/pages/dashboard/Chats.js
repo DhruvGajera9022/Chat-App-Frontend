@@ -28,6 +28,7 @@ import Friends from "../../sections/Dashboard/Friends";
 import { socket } from "../../socket";
 import { useDispatch, useSelector } from "react-redux";
 import { FetchDirectConversations } from "../../redux/slices/conversation";
+import { blueBG } from 'console-log-colors';
 
 const user_id = window.localStorage.getItem("user_id");
 
@@ -41,6 +42,7 @@ const Chats = () => {
 
   useEffect(() => {
     socket.emit("get_direct_conversations", { user_id }, (data) => {
+      console.log(blueBG("Get Direct Conversations: "));
       console.log(data); // this data is the list of conversations
       // dispatch action
 
