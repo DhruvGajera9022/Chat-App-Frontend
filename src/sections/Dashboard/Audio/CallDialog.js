@@ -32,12 +32,12 @@ const CallDialog = ({ open, handleClose }) => {
   //* Use params from call_details if available => like in case of receiver's end
 
   const [call_details] = useSelector((state) => state.audioCall.call_queue);
-  const {incoming} = useSelector((state) => state.audioCall);
+  const { incoming } = useSelector((state) => state.audioCall);
 
   const { token } = useSelector((state) => state.auth);
 
-  const appID = 1642584767;
-  const server = "wss://webliveroom1642584767-api.coolzcloud.com/ws";
+  const appID = 2019904563;
+  const server = "wss://webliveroom2019904563-api.coolzcloud.com/ws";
 
   // roomID => ID of conversation => current_conversation.id
   // token => generate on backend & get on App
@@ -180,7 +180,7 @@ const CallDialog = ({ open, handleClose }) => {
               console.log(result);
 
               // After calling the CreateStream method, you need to wait for the ZEGOCLOUD server to return the local stream object before any further operation.
-             const localStream = await zg.createStream({
+              const localStream = await zg.createStream({
                 camera: { audio: true, video: false },
               });
 
@@ -233,13 +233,12 @@ const CallDialog = ({ open, handleClose }) => {
           // Callback for updates on the status of ther users in the room.
           zg.on("roomUserUpdate", async (roomID, updateType, userList) => {
             console.warn(
-              `roomUserUpdate: room ${roomID}, user ${
-                updateType === "ADD" ? "added" : "left"
+              `roomUserUpdate: room ${roomID}, user ${updateType === "ADD" ? "added" : "left"
               } `,
               JSON.stringify(userList)
             );
             if (updateType !== "ADD") {
-            
+
               handleDisconnect();
             } else {
               // const current_users = JSON.stringify(userList);

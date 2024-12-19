@@ -6,6 +6,7 @@ import { SimpleBarStyle } from "../../components/Scrollbar";
 import { ChatHeader, ChatFooter } from "../../components/Chat";
 import useResponsive from "../../hooks/useResponsive";
 import { Chat_History } from "../../data";
+import { blueBG } from 'console-log-colors';
 import {
   DocMsg,
   LinkMsg,
@@ -34,7 +35,7 @@ const Conversation = ({ isMobile, menu }) => {
 
     socket.emit("get_messages", { conversation_id: current?.id }, (data) => {
       // data => list of messages
-      console.log(data, "List of messages");
+      console.log(blueBG(`List Message: ${data}`));
       dispatch(FetchCurrentMessages({ messages: data }));
     });
 

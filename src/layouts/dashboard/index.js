@@ -6,6 +6,7 @@ import SideNav from "./SideNav";
 import { useDispatch, useSelector } from "react-redux";
 import { FetchUserProfile, SelectConversation, showSnackbar } from "../../redux/slices/app";
 import { socket, connectSocket } from "../../socket";
+import { greenBG } from 'console-log-colors';
 import {
   UpdateDirectConversation,
   AddDirectConversation,
@@ -92,7 +93,7 @@ const DashboardLayout = () => {
       });
 
       socket.on("start_chat", (data) => {
-        console.log(data);
+        console.log(greenBG(`start_chat: ${data}`));
         // add / update to conversation list
         const existing_conversation = conversations.find(
           (el) => el?.id === data._id
